@@ -191,6 +191,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 	#define DATASTORE_IDENT(x, y) DATASTORE_CONCAT(x, DATASTORE_CONCAT(_, y))
 #endif
 
+#ifndef DATASTORE_MAYBE_UNUSED
+	#define DATASTORE_MAYBE_UNUSED(expr) do { (void)(expr); } while (0)
+#endif
+
 /**
  * @brief Vector type definition and methods declaration
  *
@@ -258,6 +262,7 @@ void DATASTORE_IDENT(name__, free)(struct name__ *self) \
 	for (size_t i = 0; i < self->size; ++i) \
 	{ \
 		trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &self->data[i]; \
+		DATASTORE_MAYBE_UNUSED(val); \
 		trait__(DATASTORE_VEC_TRAIT_FREE) \
 	} \
 	free(self->data); \
@@ -315,6 +320,7 @@ void DATASTORE_IDENT(name__, pop)(struct name__ *self) \
 	assert(self->size != 0); \
 	--self->size; \
 	trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &self->data[self->size]; \
+	DATASTORE_MAYBE_UNUSED(val); \
 	trait__(DATASTORE_VEC_TRAIT_FREE) \
 }
 
