@@ -19,8 +19,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 #ifndef DATASTORE_VEC_H
 #define DATASTORE_VEC_H
 
+#include <stdlib.h>
+#include <assert.h>
+
 /**
- * @file An efficient, single-header, generic dynamic array iplementation
+ * @file vector.h
+ * @defgroup Vector DATASTORE_VEC: An efficient, single-header, generic dynamic array iplementation
+ *
+ * @brief An efficient, single-header, generic dynamic array iplementation
+ *
  *
  * # Usage
  *
@@ -36,6 +43,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
  * // Methods definitionion (in the .c)
  * DATASTORE_VEC_IMPL(STR_TRAIT, str_vec)
  * @endcode
+ *
+ * **Macro `DATASTORE_VEC(type, name)`**: Define a new vector type
+ *  - `type`: Type stored in the vector
+ *  - `name`: Name of the vector type
+ *
+ * **Macro `DATASTORE_VEC_IMPL(type_trait, name)`**: Implements methods for a corresponding vector type
+ *  - `type_trait`: Type-trait X-macro
+ *  - `name`: Name of the corresponding vector type
  *
  * # Trait type
  *
@@ -66,32 +81,104 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
  * # Exposed methods
  *
  * The following methods are exposed and can be used DataStore's vectors:
- * - `new(size_t initial_capacity)`: Create a new vector with an initial capacity
+ * - `vec new(size_t initial_capacity)`: Create a new vector with an initial capacity
  *   - `initial_capacity`: Number of elements the newly created vector can
  *   contain before needing to `realloc`.
- * - `free(struct vec *self)`: Free memory taken by the vector by calling the
+ * - `void free(struct vec *self)`: Free memory taken by the vector by calling the
  *   `FREE` function defined in the type trait for every elements. Then the vector
  *   itself is `free`d.
  *   - `self`: instance
- * - `clone(struct vec *self)`: Make a carbon copy of the vector. This function
+ * - `vec *clone(struct vec *self)`: Make a carbon copy of the vector. This method
  *   will call the `CLONE` function defined in the type trait for every elements.
  *   - `self`: instance
+ * - `void shrink_to_fit(struct vec *self)`: Request removal of unused capacity.
+ *  This method may or may not reduce the space occupied by the vector's data (depending on `malloc` implementations).
+ *   - `self`: instance
+ * - `void reserve(struct vec *self, size_t new_capacity)`: Request additional capacity.
+ *   This method ensure the vector can hold at least `new_capacity` elements.
+ *   - `self`: instance
+ *   - `new_capacity`: minimum number of elements the vector must be able to hold without calling `realloc`
+ * - `void push(struct vec *self, type val)`: Append element to the vector.
+ *   - `self`: instance
+ *   - `val`: new element to append
+ * - `void pop(struct vec *self)`: Remove the last element of the vector.
+ *   Before calling this method, you must make sure the vector is not empty.
+ *   - `self`: instance
+ *
+ * Each method must be prefixed by the name of the vector type + `_`.
  *
  * # Examples
  *
+ * **Concatenate two strings**
  * @code{.c}
- * // Vector of ints
- * #define INT_TRAIT(X) \
- * 	X(TYPE, char) \
- * 	X(FREE, {}) \
- * 	X(CLONE, { *new = *val; })
+ * #include <vector.h>
  *
+ * // Vector of chars
+ * #define CHAR_TRAIT(X) \
+ *     X(TYPE, char) \
+ *     X(FREE, {}) \
+ *     X(CLONE, { *new = *val; })
+ *
+ * DATASTORE_VEC(char, stringbuf)
+ * DATASTORE_VEC_IMPL(CHAR_TRAIT, stringbuf)
+ *
+ * typedef struct stringbuf stringbuf;
+ *
+ * // Concatenate two null-terminated strings
+ * char *concat(const char *a, const char *b)
+ * {
+ *    stringbuf sb = stringbuf_new(256);
+ *    for (size_t i = 0; a[i]; ++i)
+ *        stringbuf_push(&sb, a[i]);
+ *    for (size_t i = 0; b[i]; ++i)
+ *        stringbuf_push(&sb, b[i]);
+ *    stringbuf_push(&sb, '\0');
+ *    return sb.data;
+ * }
  * @endcode
  *
+ * **Matrix manipulation**
+ * @code{.c}
+ * #include <vector.h>
+ *
+ * // Vector of floats
+ * #define FLT_TRAIT(X) \
+ * 	X(TYPE, float) \
+ * 	X(FREE, {}) \
+ * 	X(CLONE, { *new = *val; })
+ * DATASTORE_VEC(float, vec)
+ * DATASTORE_VEC_IMPL(FLT_TRAIT, vec)
+ * typedef struct vec vec;
+ * 
+ * // Matrix of floats
+ * #define MAT_TRAIT(X) \
+ * 	X(TYPE, struct vec) \
+ * 	X(FREE, { vec_free(val); }) \
+ * 	X(CLONE, { *new = vec_clone(val); })
+ * DATASTORE_VEC(struct vec, mat)
+ * DATASTORE_VEC_IMPL(MAT_TRAIT, mat)
+ * typedef struct mat mat;
+ * 
+ * int main()
+ * {
+ * 	vec c1 = vec_new(2);
+ * 	vec_push(&c1, 3.5f);
+ * 	vec_push(&c1, -1.8f);
+ * 
+ * 	vec c2 = vec_new(2);
+ * 	vec_push(&c2, 1.f);
+ * 	vec_push(&c2, 2.7f);
+ * 
+ * 	mat m1 = mat_new(2);
+ * 	mat_push(&m1, c1);
+ * 	mat_push(&m1, c2);
+ * 
+ * 	mat m2 = mat_clone(&m1);
+ * 	mat_free(&m1);
+ * 	mat_free(&m2);
+ * }
+ * @endcode
  */
-
-#include <stdlib.h>
-#include <assert.h>
 
 #ifndef DATASTORE_CONCAT_
 	#define DATASTORE_CONCAT_(x, y) x##y
@@ -104,6 +191,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 	#define DATASTORE_IDENT(x, y) DATASTORE_CONCAT(x, DATASTORE_CONCAT(_, y))
 #endif
 
+/**
+ * @brief Vector type definition and methods declaration
+ *
+ * This macro defines the vector type and declare it's methods
+ *
+ * @param type__ Underlying type of the vector
+ * @param name__ Name of the vector type
+ */
 #define DATASTORE_VEC(type__, name__) \
 struct name__ \
 { \
@@ -111,18 +206,6 @@ struct name__ \
 	size_t size; \
 	size_t capacity; \
 }; \
-DATASTORE_VEC_METHODS(type__, name__)
-
-#define DATASTORE_VEC_TYPEDEF(type__, name__, typedef__) \
-typedef struct name__ \
-{ \
-	type__ *data; \
-	size_t size; \
-	size_t capacity; \
-} typedef__; \
-DATASTORE_VEC_METHODS(type__, name__)
-
-#define DATASTORE_VEC_METHODS(type__, name__) \
 struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity); \
 void DATASTORE_IDENT(name__, free)(struct name__ *self); \
 struct name__ DATASTORE_IDENT(name__, clone)(const struct name__ *self); \
@@ -146,6 +229,14 @@ void DATASTORE_IDENT(name__, pop)(struct name__ *self);
 #define DATASTORE_VEC_TRAIT_CLONE_FREE(tokens)
 #define DATASTORE_VEC_TRAIT_CLONE_CLONE(tokens) tokens
 
+/**
+ * @brief Vector methods implementation
+ *
+ * This macro defines the common methods for vector types
+ *
+ * @param trait__ Vector type-trait for the underlying type
+ * @param name__ Name of the vector, must match the name passed to @ref DATASTORE_VEC
+ */
 #define DATASTORE_VEC_IMPL(trait__, name__) \
 struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity) \
 { \
@@ -226,5 +317,7 @@ void DATASTORE_IDENT(name__, pop)(struct name__ *self) \
 	trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &self->data[self->size]; \
 	trait__(DATASTORE_VEC_TRAIT_FREE) \
 }
+
+/** @endgroup Vector */
 
 #endif // DATASTORE_VEC_H
