@@ -135,7 +135,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  *   `FREE` function defined in the type trait for every elements. Then the vector
  *   itself is `free`d.
  *   - `self`: instance
- * - `vec clone(struct vec *self)`: Make a carbon copy of the vector. This method
+ * - `vec clone(const struct vec *self)`: Make a carbon copy of the vector. This method
  *   will call the `CLONE` function defined in the type trait for every elements.
  *   - `self`: instance
  * - `void shrink_to_fit(struct vec *self)`: Request removal of unused capacity.

@@ -74,6 +74,7 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity != 0)
 		ASSERT(a.size == 1)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foobar"));
 
 		vs_free(&a);
@@ -91,6 +92,7 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity == 15)
 		ASSERT(a.size == 1)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foo"));
 
 		vs_free(&a);
@@ -102,6 +104,7 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity != 0)
 		ASSERT(a.size == 1)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "bar"));
 
 		vs_free(&a);
@@ -211,10 +214,15 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity >= 5)
 		ASSERT(a.size == 5)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "lorem"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "ipsum"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "dolor"))
+		ASSERT(a.data[3] != NULL);
 		ASSERT(!strcmp(a.data[3], "sit"))
+		ASSERT(a.data[4] != NULL);
 		ASSERT(!strcmp(a.data[4], "amet"))
 
 		vs_shrink_to_fit(&a);
@@ -248,10 +256,15 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity >= 5)
 		ASSERT(a.size == 5)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "lorem"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "ipsum"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "dolor"))
+		ASSERT(a.data[3] != NULL);
 		ASSERT(!strcmp(a.data[3], "sit"))
+		ASSERT(a.data[4] != NULL);
 		ASSERT(!strcmp(a.data[4], "amet"))
 
 		vs b = vs_clone(&a);
@@ -259,10 +272,15 @@ TESTS(vec_string, {
 		ASSERT(b.data != a.data)
 		ASSERT(b.capacity >= 5)
 		ASSERT(b.size == 5)
+		ASSERT(b.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], b.data[0]))
+		ASSERT(b.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], b.data[1]))
+		ASSERT(b.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], b.data[2]))
+		ASSERT(b.data[3] != NULL);
 		ASSERT(!strcmp(a.data[3], b.data[3]))
+		ASSERT(b.data[4] != NULL);
 		ASSERT(!strcmp(a.data[4], b.data[4]))
 
 		vs_free(&a);
@@ -286,8 +304,11 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity >= 3)
 		ASSERT(a.size == 3)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foo"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "bar"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "baz"))
 
 		vs_free(&a);
@@ -307,8 +328,11 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity == 64)
 		ASSERT(a.size == 3)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foo"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "bar"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "baz"))
 
 		vs_free(&a);
@@ -328,8 +352,11 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity == 3)
 		ASSERT(a.size == 3)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foo"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "bar"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "baz"))
 
 		// Must grow
@@ -337,9 +364,13 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity >= 4)
 		ASSERT(a.size == 4)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foo"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "bar"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "baz"))
+		ASSERT(a.data[3] != NULL);
 		ASSERT(!strcmp(a.data[3], "quz"))
 
 		vs_free(&a);
@@ -359,8 +390,11 @@ TESTS(vec_string, {
 		ASSERT(a.data != NULL)
 		ASSERT(a.capacity >= 3)
 		ASSERT(a.size == 3)
+		ASSERT(a.data[0] != NULL);
 		ASSERT(!strcmp(a.data[0], "foo"))
+		ASSERT(a.data[1] != NULL);
 		ASSERT(!strcmp(a.data[1], "bar"))
+		ASSERT(a.data[2] != NULL);
 		ASSERT(!strcmp(a.data[2], "baz"))
 
 

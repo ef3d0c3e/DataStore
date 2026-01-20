@@ -5,8 +5,8 @@ CFLAGS_COMMON := -Wall -Wextra -Wconversion -pedantic -std=c99 -ggdb
 IFLAGS := -I./tests
 LFLAGS :=
 
-CFLAGS_GCC := $(CFLAGS_COMMON) -Wshadow -Wstrict-overflow=5 -Wformat=2 -Wcast-align -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -fstack-protector-strong -fanalyzer -ftrapv
-CFLAGS_CLANG := $(CFLAGS_COMMON) -Xanalyzer
+CFLAGS_GCC := $(CFLAGS_COMMON) -Wshadow -Wstrict-overflow=5 -Wformat=2 -Wcast-align -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -fstack-protector-strong -fanalyzer -ftrapv -Wno-analyzer-malloc-leak
+CFLAGS_CLANG := $(CFLAGS_COMMON) -Wreserved-id-macro -Wshadow-all
 
 
 SOURCES := ./tests/tests.c ./tests/malloc.c
