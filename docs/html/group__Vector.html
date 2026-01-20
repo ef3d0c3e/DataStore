@@ -128,8 +128,7 @@ Usage</h1>
 <div class="line"><span class="preprocessor">    X(FREE, { free(*val); }) \</span></div>
 <div class="line"><span class="preprocessor">    X(CLONE, { *new = strdup(*val); })</span></div>
 <div class="line"><span class="comment">// Methods definitionion (in the .c)</span></div>
-<div class="line"><a class="code hl_define" href="vector_8h.html#a83a7aca3fc8721dc5fc716a1551b9b1b">DATASTORE_VEC_IMPL</a>(<a class="code hl_define" href="vec__string_8c.html#aaa0bcc8b2b8ee9274b94b3db12ae0725">STR_TRAIT</a>, str_vec)</div>
-<div class="ttc" id="avec__string_8c_html_aaa0bcc8b2b8ee9274b94b3db12ae0725"><div class="ttname"><a href="vec__string_8c.html#aaa0bcc8b2b8ee9274b94b3db12ae0725">STR_TRAIT</a></div><div class="ttdeci">#define STR_TRAIT(X)</div><div class="ttdef"><b>Definition</b> vec_string.c:13</div></div>
+<div class="line"><a class="code hl_define" href="vector_8h.html#a83a7aca3fc8721dc5fc716a1551b9b1b">DATASTORE_VEC_IMPL</a>(STR_TRAIT, str_vec)</div>
 <div class="ttc" id="avector_8h_html_a5fc7ccc389c7d2abf24286493d14e121"><div class="ttname"><a href="vector_8h.html#a5fc7ccc389c7d2abf24286493d14e121">DATASTORE_VEC</a></div><div class="ttdeci">#define DATASTORE_VEC(type__, name__)</div><div class="ttdoc">Vector type definition and methods declaration.</div><div class="ttdef"><b>Definition</b> vector.h:264</div></div>
 <div class="ttc" id="avector_8h_html_a83a7aca3fc8721dc5fc716a1551b9b1b"><div class="ttname"><a href="vector_8h.html#a83a7aca3fc8721dc5fc716a1551b9b1b">DATASTORE_VEC_IMPL</a></div><div class="ttdeci">#define DATASTORE_VEC_IMPL(trait__, name__)</div><div class="ttdoc">Vector methods implementation.</div><div class="ttdef"><b>Definition</b> vector.h:448</div></div>
 </div><!-- fragment --><p><b>Macro <span class="tt"><a class="el" href="vector_8h.html#a5fc7ccc389c7d2abf24286493d14e121" title="Vector type definition and methods declaration.">DATASTORE_VEC(type, name)</a></span></b>: Define a new vector type</p><ul>
@@ -239,7 +238,7 @@ Examples</h1>
 <div class="line"><span class="preprocessor">    X(CLONE, { *new = *val; })</span></div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_define" href="vector_8h.html#a5fc7ccc389c7d2abf24286493d14e121">DATASTORE_VEC</a>(<span class="keywordtype">char</span>, stringbuf)</div>
-<div class="line"><a class="code hl_define" href="vector_8h.html#a83a7aca3fc8721dc5fc716a1551b9b1b">DATASTORE_VEC_IMPL</a>(<a class="code hl_define" href="main_8c.html#a27912a5a69d0f96d1adfc76facbbeb4b">CHAR_TRAIT</a>, stringbuf)</div>
+<div class="line"><a class="code hl_define" href="vector_8h.html#a83a7aca3fc8721dc5fc716a1551b9b1b">DATASTORE_VEC_IMPL</a>(CHAR_TRAIT, stringbuf)</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>stringbuf stringbuf;</div>
 <div class="line"> </div>
@@ -254,7 +253,6 @@ Examples</h1>
 <div class="line">   stringbuf_push(&amp;sb, <span class="charliteral">&#39;\0&#39;</span>);</div>
 <div class="line">   <span class="keywordflow">return</span> sb.data;</div>
 <div class="line">}</div>
-<div class="ttc" id="amain_8c_html_a27912a5a69d0f96d1adfc76facbbeb4b"><div class="ttname"><a href="main_8c.html#a27912a5a69d0f96d1adfc76facbbeb4b">CHAR_TRAIT</a></div><div class="ttdeci">#define CHAR_TRAIT(X)</div><div class="ttdef"><b>Definition</b> main.c:10</div></div>
 <div class="ttc" id="avector_8h_html"><div class="ttname"><a href="vector_8h.html">vector.h</a></div></div>
 </div><!-- fragment --><p><b>Matrix manipulation</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="vector_8h.html">vector.h</a>&gt;</span></div>
 <div class="line"> </div>
@@ -276,7 +274,7 @@ Examples</h1>
 <div class="line"><a class="code hl_define" href="vector_8h.html#a83a7aca3fc8721dc5fc716a1551b9b1b">DATASTORE_VEC_IMPL</a>(MAT_TRAIT, mat)</div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>mat mat;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>()</div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">    vec c1 = vec_new(2);</div>
 <div class="line">    vec_push(&amp;c1, 3.5f);</div>
@@ -294,7 +292,6 @@ Examples</h1>
 <div class="line">    mat_free(&amp;m1);</div>
 <div class="line">    mat_free(&amp;m2);</div>
 <div class="line">}</div>
-<div class="ttc" id="amain_8c_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition</b> main.c:31</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

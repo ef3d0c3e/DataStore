@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['_5f_5ftest_5fvec_5fintegereval_0',['__test_vec_integereval',['../vec__integer_8c.html#a7512ae7369e9118b32b8955cffc61097',1,'vec_integer.c']]],
-  ['_5f_5ftest_5fvec_5fstringeval_1',['__test_vec_stringeval',['../vec__string_8c.html#a784063ac8ca0516b0f57ab9082dc03ba',1,'vec_string.c']]]
+  ['advanced_20usage_0',['Advanced Usage',['../group__Vector.html#autotoc_md3',1,'']]],
+  ['an_20efficient_20single_20header_20generic_20dynamic_20array_20iplementation_1',['DATASTORE_VEC: An efficient, single-header, generic dynamic array iplementation',['../group__Vector.html',1,'']]],
+  ['array_20iplementation_2',['DATASTORE_VEC: An efficient, single-header, generic dynamic array iplementation',['../group__Vector.html',1,'']]]
 ];
