@@ -81,7 +81,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  *
  * ## Examples
  *
- * **For primitives** `int`, `float`, `char`, etc.
+ * **For primitives**: `int`, `float`, `char`, etc.
  *
  * @code{.c}
  * #define INT_TRAIT(X) \
@@ -93,6 +93,15 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  * 	X(TYPE, float) \
  * 	X(FREE, {}) \
  * 	X(CLONE, { *new = *val; })
+ * @endcode
+ *
+ * **For types that need special handling**:
+ *
+ * @code{.c}
+ * #define STR_TRAIT(X) \
+ * 	X(TYPE, char*) \
+ * 	X(FREE, { free(*val); }) \
+ * 	X(CLONE, { *new = strdup(*val); })
  * @endcode
  *
  * @anchor advanced_usage

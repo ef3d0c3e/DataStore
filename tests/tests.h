@@ -27,9 +27,9 @@ extern test_runner* g_runner;
 
 #define TEST(name__, ...)                                                                        \
 	{                                                                                            \
-		if (runner__->id_filter == -1 || runner__->id_filter == total__ + 1) {                   \
+		total__ += 1;                                                                            \
+		if (runner__->id_filter == -1 || runner__->id_filter == total__) {                       \
 			int status__ = 0;                                                                    \
-			total__ += 1;                                                                        \
 			do {                                                                                 \
 				if (setjmp(runner__->err_hook) == 0) {                                           \
 					__VA_ARGS__                                                                  \
