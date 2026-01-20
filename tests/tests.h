@@ -23,9 +23,9 @@ typedef struct
 	void (*runner)(test_runner*);
 } unit_test;
 
-static test_runner* g_runner = NULL;
+extern test_runner* g_runner;
 
-#define TEST(...)                                                                                \
+#define TEST(name__, ...)                                                                        \
 	{                                                                                            \
 		if (runner__->id_filter == -1 || runner__->id_filter == total__ + 1) {                   \
 			int status__ = 0;                                                                    \
@@ -41,9 +41,11 @@ static test_runner* g_runner = NULL;
 			} while (0);                                                                         \
 			passed__ += status__;                                                                \
 			fprintf(stderr,                                                                      \
-			        "#%d: %s\033[0m\n",                                                          \
+			        "#%d%s%s: %s\033[0m\n",                                                      \
 			        total__,                                                                     \
-			        "\033[32mOK\0\033[31mFAIL" + (!status__ * 8));                               \
+			        name__ != NULL ? " " : "",                                                   \
+			        name__ != NULL ? name__ : "",                                                \
+			        &"\033[32mOK\0\033[31mFAIL"[!status__ * 8]);                                 \
 		}                                                                                        \
 	}
 
@@ -66,7 +68,7 @@ static test_runner* g_runner = NULL;
 		runner__->passed += passed__;                                                            \
 		runner__->total += total__;                                                              \
 	}                                                                                            \
-	static const unit_test test_##label__ = {                                                    \
+	const unit_test test_##label__ = {                                                           \
 		.name = #label__,                                                                        \
 		.runner = __test_##label__##eval,                                                        \
 	};
@@ -80,8 +82,11 @@ static test_runner* g_runner = NULL;
 void
 run_tests(const char* filter, int id_filter, unit_test* tests, size_t ntest);
 
-void *iso_malloc(size_t size);
-void *iso_realloc(void *ptr, size_t new_size);
-void iso_free(void *ptr);
+void*
+iso_malloc(size_t size);
+void*
+iso_realloc(void* ptr, size_t new_size);
+void
+iso_free(void* ptr);
 
 #endif // TESTS_H

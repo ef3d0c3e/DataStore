@@ -1,20 +1,38 @@
 NAME := data_store
-CC := gcc
-CFLAGS := -Wall -Wextra -Wconversion -pedantic -std=c99 -ggdb
+CC_GCC := gcc
+CC_CLANG := clang-21
+CFLAGS_COMMON := -Wall -Wextra -Wconversion -pedantic -std=c99 -ggdb
 IFLAGS := -I./tests
 LFLAGS :=
 
-SOURCES := ./tests/tests.c
+CFLAGS_GCC := $(CFLAGS_COMMON) -Wshadow -Wstrict-overflow=5 -Wformat=2 -Wcast-align -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -fstack-protector-strong -fanalyzer -ftrapv
+CFLAGS_CLANG := $(CFLAGS_COMMON) -Xanalyzer
 
-.PHONY: vector-test
-vector-test: SOURCES += ./vector/tests.c
-vector-test:
-	$(CC) $(CFLAGS) $(IFLAGS) -o $@ $(SOURCES) $(LFLAGS)
+
+SOURCES := ./tests/tests.c ./tests/malloc.c
+BINS :=
 
 .PHONY: $(NAME)
 $(NAME): all
 
-# All
+# {{{ Vector
+VECTOR_SOURCES := ./vector/main.c ./vector/vec_integer.c ./vector/vec_string.c
+BINS += vector-test-gcc vector-test-clang
+
+.PHONY: vector-test-gcc
+vector-test-gcc: SOURCES += $(VECTOR_SOURCES)
+vector-test-gcc:
+	$(CC_GCC) $(CFLAGS_GCC) $(IFLAGS) -o $@ $(SOURCES) $(LFLAGS)
+
+.PHONY: vector-test-clang
+vector-test-clang: SOURCES += $(VECTOR_SOURCES)
+vector-test-clang:
+	$(CC_CLANG) $(CFLAGS_CLANG) $(IFLAGS) -o $@ $(SOURCES) $(LFLAGS)
+
+.PHONY: vector-test
+vector-test: vector-test-gcc vector-test-clang
+# }}}
+
 .PHONY: all
 all: vector-test
 
@@ -29,7 +47,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	$(RM) vector-test
+	$(RM) $(BINS)
 
 .PHONY: re
 re: fclean all

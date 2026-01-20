@@ -58,6 +58,16 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  *  - `settings`: X-macro to specify the vector settings for the allocator and behavior, see
  *  \ref advanced_usage "Advanced Usage"
  *
+ * The resulting vector struct will look like this:
+ * @code{.c}
+ * struct vec_name {
+ *     vec_type *data;
+ *     size_t capacity;
+ *     size_t size;
+ * }
+ * @endcode
+ * Where `vec_name` and `vec_type` are the parameters passed to macro @ref DATASTORE_VEC
+ *
  * @anchor trait_type
  * # Trait type
  *
@@ -113,6 +123,8 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  *   `push` operations. Note that you may want to increase the default size from `1` to a larger
  *   value.
  *
+ * Checking for allocation errors it up to you.
+ *
  * # Exposed methods
  *
  * The following methods are exposed and can be used on all DataStore's vector types:
@@ -123,7 +135,7 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  *   `FREE` function defined in the type trait for every elements. Then the vector
  *   itself is `free`d.
  *   - `self`: instance
- * - `vec *clone(struct vec *self)`: Make a carbon copy of the vector. This method
+ * - `vec clone(struct vec *self)`: Make a carbon copy of the vector. This method
  *   will call the `CLONE` function defined in the type trait for every elements.
  *   - `self`: instance
  * - `void shrink_to_fit(struct vec *self)`: Request removal of unused capacity.
@@ -244,8 +256,8 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
 struct name__ \
 { \
 	type__ *data; \
-	size_t size; \
 	size_t capacity; \
+	size_t size; \
 }; \
 struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity); \
 void DATASTORE_IDENT(name__, free)(struct name__ *self); \
@@ -399,10 +411,11 @@ void DATASTORE_IDENT(name__, push)(struct name__ *self, trait__(DATASTORE_VEC_TR
 	settings__(DATASTORE_VEC_SETTINGS_GROW) \
 	assert(new_capacity > self->size); \
 	trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self->data; \
-	const size_t size = new_capacity; \
+	const size_t size = new_capacity * sizeof(*ptr); \
 	settings__(DATASTORE_VEC_SETTINGS_REALLOC) \
 	self->data = ptr; \
-	self->capacity = capacity; \
+	self->capacity = new_capacity; \
+	self->data[self->size++] = value; \
 } \
 void DATASTORE_IDENT(name__, pop)(struct name__ *self) \
 { \

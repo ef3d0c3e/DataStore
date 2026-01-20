@@ -1,6 +1,8 @@
 #include "tests.h"
 #include <string.h>
 
+test_runner *g_runner = NULL;
+
 void
 run_tests(const char* filter,
           int id_filter,
