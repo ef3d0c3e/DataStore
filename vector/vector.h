@@ -1,21 +1,19 @@
 /* Copyright © 2026 Lino Gamba
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the “Software”), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the “Software”), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 #ifndef DATASTORE_VEC_H
 #define DATASTORE_VEC_H
 
@@ -48,10 +46,19 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
  *  - `type`: Type stored in the vector
  *  - `name`: Name of the vector type
  *
- * **Macro `DATASTORE_VEC_IMPL(type_trait, name)`**: Implements methods for a corresponding vector type
- *  - `type_trait`: Type-trait X-macro
+ * **Macro `DATASTORE_VEC_IMPL(type_trait, name)`**: Implements methods for a corresponding vector
+ * type
+ *  - `type_trait`: Type-trait X-macro, see @ref trait_type "Trait Type"
  *  - `name`: Name of the corresponding vector type
  *
+ * **Macro `DATASTORE_VEC_IMPL_S(type_trait, name, settings)`**: Implements methods for a
+ * corresponding vector type, takes additional settings
+ *  - `type_trait`: Type-trait X-macro, see @ref trait_type "Trait Type"
+ *  - `name`: Name of the corresponding vector type
+ *  - `settings`: X-macro to specify the vector settings for the allocator and behavior, see
+ *  \ref advanced_usage "Advanced Usage"
+ *
+ * @anchor trait_type
  * # Trait type
  *
  * The trait type is used to help DataStore understand how to work with your
@@ -78,9 +85,37 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
  * 	X(CLONE, { *new = *val; })
  * @endcode
  *
+ * @anchor advanced_usage
+ * # Advanced Usage
+ *
+ * You can customize the vector's allocator and behavior by using the @ref DATASTORE_VEC_IMPL_S
+ * macro.
+ *
+ * Here are the default settings:
+ * @code{.c}
+ * #define DATASTORE_VEC_SETTINGS_DEFAULT(X) \
+ *     X(NEW, { ptr = malloc(size); if (!ptr) abort(); }) \
+ *     X(REALLOC, { ptr = realloc(ptr, size); if (!ptr) abort(); }) \
+ *     X(FREE, { free(ptr); }) \
+ *     X(GROW, { new_capacity = capacity != 0 ? (capacity * 2) : 1; })
+ * @endcode
+ *
+ * - `NEW` is the allocator used when calling `vec_new(size_t size)`. It should allocate a buffer
+ *   that can hold at least `size` bytes, and return it inside `ptr`. `ptr` is a non type-erased
+ *   that will become the vector's `data`.
+ * - `REALLOC` is the reallocator, used when changing the capacity of the internal buffer.
+ *   It is used by `push`, `shrink_to_fit` and `reserve`. It should reallocate `ptr` to be able
+ *   to hold at least `size` bytes, and return the new buffer inside `ptr`.
+ * - `FREE` is the deallocator, used when freeing data from the vector. It should free the buffer
+ *   `ptr`.
+ * - `GROW` is the vector's growth strategy. It should return a value in `new_capacity` that is
+ *   strictly greater than `capacity`. By defaults it doubles length, which guarantees O(1)
+ *   `push` operations. Note that you may want to increase the default size from `1` to a larger
+ *   value.
+ *
  * # Exposed methods
  *
- * The following methods are exposed and can be used DataStore's vectors:
+ * The following methods are exposed and can be used on all DataStore's vector types:
  * - `vec new(size_t initial_capacity)`: Create a new vector with an initial capacity
  *   - `initial_capacity`: Number of elements the newly created vector can
  *   contain before needing to `realloc`.
@@ -92,12 +127,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
  *   will call the `CLONE` function defined in the type trait for every elements.
  *   - `self`: instance
  * - `void shrink_to_fit(struct vec *self)`: Request removal of unused capacity.
- *  This method may or may not reduce the space occupied by the vector's data (depending on `malloc` implementations).
+ *  This method may or may not reduce the space occupied by the vector's data (depending on
+ *  `malloc` implementations).
  *   - `self`: instance
  * - `void reserve(struct vec *self, size_t new_capacity)`: Request additional capacity.
  *   This method ensure the vector can hold at least `new_capacity` elements.
  *   - `self`: instance
- *   - `new_capacity`: minimum number of elements the vector must be able to hold without calling `realloc`
+ *   - `new_capacity`: minimum number of elements the vector must be able to hold without calling
+ *   `realloc`
  * - `void push(struct vec *self, type val)`: Append element to the vector.
  *   - `self`: instance
  *   - `val`: new element to append
@@ -234,14 +271,48 @@ void DATASTORE_IDENT(name__, pop)(struct name__ *self);
 #define DATASTORE_VEC_TRAIT_CLONE_CLONE(tokens) tokens
 
 /**
+ * @brief Default settings for the vector type
+ */
+#define DATASTORE_VEC_SETTINGS_DEFAULT(X) \
+	X(NEW, { ptr = malloc(size); if (!ptr) abort(); }) \
+	X(REALLOC, { ptr = realloc(ptr, size); if (!ptr) abort(); }) \
+	X(FREE, { free(ptr); }) \
+	X(GROW, { new_capacity = capacity != 0 ? (capacity * 2) : 1; })
+
+#define DATASTORE_VEC_SETTINGS_NEW(tag, tokens) DATASTORE_VEC_SETTINGS_NEW_##tag(tokens)
+#define DATASTORE_VEC_SETTINGS_NEW_NEW(tokens) tokens
+#define DATASTORE_VEC_SETTINGS_NEW_REALLOC(tokens)
+#define DATASTORE_VEC_SETTINGS_NEW_FREE(tokens)
+#define DATASTORE_VEC_SETTINGS_NEW_GROW(tokens)
+
+#define DATASTORE_VEC_SETTINGS_REALLOC(tag, tokens) DATASTORE_VEC_SETTINGS_REALLOC_##tag(tokens)
+#define DATASTORE_VEC_SETTINGS_REALLOC_NEW(tokens)
+#define DATASTORE_VEC_SETTINGS_REALLOC_REALLOC(tokens) tokens
+#define DATASTORE_VEC_SETTINGS_REALLOC_FREE(tokens)
+#define DATASTORE_VEC_SETTINGS_REALLOC_GROW(tokens)
+
+#define DATASTORE_VEC_SETTINGS_FREE(tag, tokens) DATASTORE_VEC_SETTINGS_FREE_##tag(tokens)
+#define DATASTORE_VEC_SETTINGS_FREE_NEW(tokens)
+#define DATASTORE_VEC_SETTINGS_FREE_REALLOC(tokens)
+#define DATASTORE_VEC_SETTINGS_FREE_FREE(tokens) tokens
+#define DATASTORE_VEC_SETTINGS_FREE_GROW(tokens)
+
+#define DATASTORE_VEC_SETTINGS_GROW(tag, tokens) DATASTORE_VEC_SETTINGS_GROW_##tag(tokens)
+#define DATASTORE_VEC_SETTINGS_GROW_NEW(tokens)
+#define DATASTORE_VEC_SETTINGS_GROW_REALLOC(tokens)
+#define DATASTORE_VEC_SETTINGS_GROW_FREE(tokens)
+#define DATASTORE_VEC_SETTINGS_GROW_GROW(tokens) tokens
+
+/**
  * @brief Vector methods implementation
  *
  * This macro defines the common methods for vector types
  *
- * @param trait__ Vector type-trait for the underlying type
+ * @param trait__ Vector type-trait for the underlying type, see @ref trait_type "Trait Type"
  * @param name__ Name of the vector, must match the name passed to @ref DATASTORE_VEC
+ * @param settings__ Custom settings for the vector, see @ref advanced_usage "Advanced Usage"
  */
-#define DATASTORE_VEC_IMPL(trait__, name__) \
+#define DATASTORE_VEC_IMPL_S(trait__, name__, settings__) \
 struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity) \
 { \
 	if (initial_capacity == 0) \
@@ -250,8 +321,11 @@ struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity) \
 			.capacity = initial_capacity, \
 			.size = 0, \
 		}; \
+	trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr; \
+	const size_t size = sizeof(trait__(DATASTORE_VEC_TRAIT_TYPE)) * initial_capacity; \
+	settings__(DATASTORE_VEC_SETTINGS_NEW) \
 	return (struct name__){ \
-		.data = malloc(sizeof(trait__(DATASTORE_VEC_TRAIT_TYPE)) * initial_capacity), \
+		.data = ptr, \
 		.capacity = initial_capacity, \
 		.size = 0, \
 	}; \
@@ -265,7 +339,11 @@ void DATASTORE_IDENT(name__, free)(struct name__ *self) \
 		DATASTORE_MAYBE_UNUSED(val); \
 		trait__(DATASTORE_VEC_TRAIT_FREE) \
 	} \
-	free(self->data); \
+	trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self->data; \
+	settings__(DATASTORE_VEC_SETTINGS_FREE) \
+	self->data = NULL; \
+	self->capacity = 0; \
+	self->size = 0; \
 } \
 struct name__ DATASTORE_IDENT(name__, clone)(const struct name__ *self) \
 { \
@@ -285,11 +363,16 @@ void DATASTORE_IDENT(name__, shrink_to_fit)(struct name__ *self) \
 	assert(self->size <= self->capacity); \
 	if (self->size == 0) \
 	{ \
+		trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self->data; \
+		settings__(DATASTORE_VEC_SETTINGS_FREE) \
+		self->data = NULL; \
 		self->capacity = 0; \
-		free(self->data); \
 		return; \
 	} \
-	self->data = realloc(self->data, self->size * sizeof(*self->data)); \
+	trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self->data; \
+	const size_t size = self->size * sizeof(*ptr); \
+	settings__(DATASTORE_VEC_SETTINGS_REALLOC) \
+	self->data = ptr; \
 	self->capacity = self->size; \
 } \
 void DATASTORE_IDENT(name__, reserve)(struct name__ *self, size_t new_capacity) \
@@ -297,7 +380,10 @@ void DATASTORE_IDENT(name__, reserve)(struct name__ *self, size_t new_capacity) 
 	assert(self->size <= self->capacity); \
 	if (self->capacity >= new_capacity || new_capacity == 0) \
 		return; \
-	self->data = realloc(self->data, new_capacity * sizeof(*self->data)); \
+	trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self->data; \
+	const size_t size = new_capacity * sizeof(*ptr); \
+	settings__(DATASTORE_VEC_SETTINGS_REALLOC) \
+	self->data = ptr; \
 	self->capacity = new_capacity; \
 } \
 void DATASTORE_IDENT(name__, push)(struct name__ *self, trait__(DATASTORE_VEC_TRAIT_TYPE) value) \
@@ -308,10 +394,14 @@ void DATASTORE_IDENT(name__, push)(struct name__ *self, trait__(DATASTORE_VEC_TR
 		self->data[self->size++] = value; \
 		return; \
 	} \
-	const size_t capacity = self->capacity \
-		? (self->capacity * 2) \
-		: 1; \
-	self->data = realloc(self->data, capacity * sizeof(*self->data)); \
+	const size_t capacity = self->capacity; \
+	size_t new_capacity; \
+	settings__(DATASTORE_VEC_SETTINGS_GROW) \
+	assert(new_capacity > self->size); \
+	trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self->data; \
+	const size_t size = new_capacity; \
+	settings__(DATASTORE_VEC_SETTINGS_REALLOC) \
+	self->data = ptr; \
 	self->capacity = capacity; \
 } \
 void DATASTORE_IDENT(name__, pop)(struct name__ *self) \
@@ -323,6 +413,18 @@ void DATASTORE_IDENT(name__, pop)(struct name__ *self) \
 	DATASTORE_MAYBE_UNUSED(val); \
 	trait__(DATASTORE_VEC_TRAIT_FREE) \
 }
+
+/**
+ * @brief Vector methods implementation
+ *
+ * This macro defines the common methods for vector types.
+ * It will call @ref DATASTORE_VEC_IMPL_S, with @ref DATASTORE_VEC_SETTINGS_DEFAULT.
+ *
+ * @param trait__ Vector type-trait for the underlying type, see @ref trait_type "Trait Type"
+ * @param name__ Name of the vector, must match the name passed to @ref DATASTORE_VEC
+ */
+#define DATASTORE_VEC_IMPL(trait__, name__) \
+	 DATASTORE_VEC_IMPL_S(trait__, name__, DATASTORE_VEC_SETTINGS_DEFAULT)
 
 /** @endgroup Vector */
 

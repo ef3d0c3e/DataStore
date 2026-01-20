@@ -2,34 +2,53 @@
 #include "vector.h"
 #include <stdlib.h>
 
+#define SETTINGS(X) \
+    X(NEW, { ptr = iso_malloc(size); if (!ptr) abort(); }) \
+    X(REALLOC, { ptr = iso_realloc(ptr, size); if (!ptr) abort(); }) \
+    X(FREE, { iso_free(ptr); }) \
+    X(GROW, { new_capacity = capacity != 0 ? (capacity * 2) : 1; })
+
 #define INT_TRAIT(X) \
 	X(TYPE, int) \
 	X(FREE, {}) \
 	X(CLONE, { *new = *val; })
 DATASTORE_VEC(int, vi)
 typedef struct vi vi;
-DATASTORE_VEC_IMPL(INT_TRAIT, vi)
-#define FLOAT_TRAIT(X) \
-	X(TYPE, float) \
-	X(FREE, {}) \
-	X(CLONE, { *new = *val; })
-DATASTORE_VEC(float, vf)
-typedef struct vf vf;
-DATASTORE_VEC_IMPL(FLOAT_TRAIT, vf)
-#define CHAR_TRAIT(X) \
-	X(TYPE, char) \
-	X(FREE, {}) \
-	X(CLONE, { *new = *val; })
-DATASTORE_VEC(char, vc)
-typedef struct vc vc;
-DATASTORE_VEC_IMPL(CHAR_TRAIT, vc)
+DATASTORE_VEC_IMPL_S(INT_TRAIT, vi, SETTINGS)
+//#define FLOAT_TRAIT(X) \
+//	X(TYPE, float) \
+//	X(FREE, {}) \
+//	X(CLONE, { *new = *val; })
+//DATASTORE_VEC(float, vf)
+//typedef struct vf vf;
+//DATASTORE_VEC_IMPL(FLOAT_TRAIT, vf)
+//#define CHAR_TRAIT(X) \
+//	X(TYPE, char) \
+//	X(FREE, {}) \
+//	X(CLONE, { *new = *val; })
+//DATASTORE_VEC(char, vc)
+//typedef struct vc vc;
+//DATASTORE_VEC_IMPL(CHAR_TRAIT, vc)
+//
+//struct foo {
+//	int x;
+//	void *ptr;
+//	float u;
+//};
+//#define FOO_TRAIT(X) \
+//	X(TYPE, struct foo) \
+//	X(FREE, {}) \
+//	X(CLONE, { *new = *val; })
+//DATASTORE_VEC(struct foo, vfoo)
+//typedef struct vfoo vfoo;
+//DATASTORE_VEC_IMPL(FOO_TRAIT, vfoo)
 
 TESTS(create_destroy, {
 	TEST({
 		vi a = vi_new(64);
 		vi_free(&a);
 		vi b = vi_new(0);
-		vf_free(&b);
+		vi_free(&b);
 	})
 })
 

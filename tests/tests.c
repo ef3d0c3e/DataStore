@@ -9,10 +9,12 @@ run_tests(const char* filter,
 {
 	test_runner runner;
 	runner.id_filter = id_filter;
+	g_runner = &runner;
 	for (size_t i = 0; i < ntest; ++i)
 	{
 		if (filter && !strstr(tests[i].name, filter))
 			continue;
 		tests[i].runner(&runner);
 	}
+	g_runner = NULL;
 }

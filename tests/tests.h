@@ -1,6 +1,7 @@
 #ifndef TESTS_H
 #define TESTS_H
 
+#include <setjmp.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -10,6 +11,10 @@ typedef struct
 	uint32_t random_state;
 	int passed;
 	int total;
+
+	/** exceptions */
+	const char* err_msg;
+	jmp_buf err_hook;
 } test_runner;
 
 typedef struct
@@ -18,13 +23,20 @@ typedef struct
 	void (*runner)(test_runner*);
 } unit_test;
 
+static test_runner* g_runner = NULL;
+
 #define TEST(...)                                                                                \
 	{                                                                                            \
 		if (runner__->id_filter == -1 || runner__->id_filter == total__ + 1) {                   \
 			int status__ = 0;                                                                    \
 			total__ += 1;                                                                        \
 			do {                                                                                 \
-				{ __VA_ARGS__ };                                                                 \
+				if (setjmp(runner__->err_hook) == 0) {                                           \
+					__VA_ARGS__                                                                  \
+				} else {                                                                         \
+					fprintf(stderr, "%s\n", runner__->err_msg);                                  \
+					break;                                                                       \
+				}                                                                                \
 				status__ = 1;                                                                    \
 			} while (0);                                                                         \
 			passed__ += status__;                                                                \
@@ -61,11 +73,15 @@ typedef struct
 
 #define ASSERT(cond)                                                                             \
 	if (!(cond)) {                                                                               \
-		fprintf(stderr, "%s#%d: Assertion failed: `%s`\n", __FILE__, __LINE__, #cond);     \
+		fprintf(stderr, "%s#%d: Assertion failed: `%s`\n", __FILE__, __LINE__, #cond);           \
 		break;                                                                                   \
 	}
 
 void
 run_tests(const char* filter, int id_filter, unit_test* tests, size_t ntest);
+
+void *iso_malloc(size_t size);
+void *iso_realloc(void *ptr, size_t new_size);
+void iso_free(void *ptr);
 
 #endif // TESTS_H
