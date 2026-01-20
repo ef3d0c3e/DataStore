@@ -213,7 +213,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="#a55b40d68532940d71a1d422c8317095c">DATASTORE_CONCAT_</a>(x, y)</div>
-<div class="ttc" id="avector_8h_html_a55b40d68532940d71a1d422c8317095c"><div class="ttname"><a href="#a55b40d68532940d71a1d422c8317095c">DATASTORE_CONCAT_</a></div><div class="ttdeci">#define DATASTORE_CONCAT_(x, y)</div><div class="ttdef"><b>Definition</b> vector.h:233</div></div>
+<div class="ttc" id="avector_8h_html_a55b40d68532940d71a1d422c8317095c"><div class="ttname"><a href="#a55b40d68532940d71a1d422c8317095c">DATASTORE_CONCAT_</a></div><div class="ttdeci">#define DATASTORE_CONCAT_(x, y)</div><div class="ttdef"><b>Definition</b> vector.h:242</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -258,7 +258,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><a class="code hl_define" href="#a41f84cc4a0734ac930127548b2c62fcb">DATASTORE_CONCAT</a>(x, <a class="code hl_define" href="#a41f84cc4a0734ac930127548b2c62fcb">DATASTORE_CONCAT</a>(_, y))</div>
-<div class="ttc" id="avector_8h_html_a41f84cc4a0734ac930127548b2c62fcb"><div class="ttname"><a href="#a41f84cc4a0734ac930127548b2c62fcb">DATASTORE_CONCAT</a></div><div class="ttdeci">#define DATASTORE_CONCAT(x, y)</div><div class="ttdef"><b>Definition</b> vector.h:236</div></div>
+<div class="ttc" id="avector_8h_html_a41f84cc4a0734ac930127548b2c62fcb"><div class="ttname"><a href="#a41f84cc4a0734ac930127548b2c62fcb">DATASTORE_CONCAT</a></div><div class="ttdeci">#define DATASTORE_CONCAT(x, y)</div><div class="ttdef"><b>Definition</b> vector.h:245</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -311,7 +311,7 @@ Macros</h2></td></tr>
 <div class="line"><span class="keywordtype">void</span> <a class="code hl_define" href="#a18decba2b32c04ee15627f6f8986c0d3">DATASTORE_IDENT</a>(name__, reserve)(<span class="keyword">struct </span>name__ *self, <span class="keywordtype">size_t</span> new_capacity); \</div>
 <div class="line"><span class="keywordtype">void</span> <a class="code hl_define" href="#a18decba2b32c04ee15627f6f8986c0d3">DATASTORE_IDENT</a>(name__, push)(<span class="keyword">struct </span>name__ *self, type__ value); \</div>
 <div class="line"><span class="keywordtype">void</span> <a class="code hl_define" href="#a18decba2b32c04ee15627f6f8986c0d3">DATASTORE_IDENT</a>(name__, pop)(<span class="keyword">struct </span>name__ *self);</div>
-<div class="ttc" id="avector_8h_html_a18decba2b32c04ee15627f6f8986c0d3"><div class="ttname"><a href="#a18decba2b32c04ee15627f6f8986c0d3">DATASTORE_IDENT</a></div><div class="ttdeci">#define DATASTORE_IDENT(x, y)</div><div class="ttdef"><b>Definition</b> vector.h:240</div></div>
+<div class="ttc" id="avector_8h_html_a18decba2b32c04ee15627f6f8986c0d3"><div class="ttname"><a href="#a18decba2b32c04ee15627f6f8986c0d3">DATASTORE_IDENT</a></div><div class="ttdeci">#define DATASTORE_IDENT(x, y)</div><div class="ttdef"><b>Definition</b> vector.h:249</div></div>
 </div><!-- fragment -->
 <p>Vector type definition and methods declaration. </p>
 <p>This macro defines the vector type and declare it's methods</p>
@@ -322,20 +322,20 @@ Macros</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  255</span><span class="preprocessor">#define DATASTORE_VEC(type__, name__) \</span></div>
-<div class="line"><span class="lineno">  256</span><span class="preprocessor">struct name__ \</span></div>
-<div class="line"><span class="lineno">  257</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  258</span><span class="preprocessor">    type__ *data; \</span></div>
-<div class="line"><span class="lineno">  259</span><span class="preprocessor">    size_t capacity; \</span></div>
-<div class="line"><span class="lineno">  260</span><span class="preprocessor">    size_t size; \</span></div>
-<div class="line"><span class="lineno">  261</span><span class="preprocessor">}; \</span></div>
-<div class="line"><span class="lineno">  262</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity); \</span></div>
-<div class="line"><span class="lineno">  263</span><span class="preprocessor">void DATASTORE_IDENT(name__, free)(struct name__ *self); \</span></div>
-<div class="line"><span class="lineno">  264</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, clone)(const struct name__ *self); \</span></div>
-<div class="line"><span class="lineno">  265</span><span class="preprocessor">void DATASTORE_IDENT(name__, shrink_to_fit)(struct name__ *self); \</span></div>
-<div class="line"><span class="lineno">  266</span><span class="preprocessor">void DATASTORE_IDENT(name__, reserve)(struct name__ *self, size_t new_capacity); \</span></div>
-<div class="line"><span class="lineno">  267</span><span class="preprocessor">void DATASTORE_IDENT(name__, push)(struct name__ *self, type__ value); \</span></div>
-<div class="line"><span class="lineno">  268</span><span class="preprocessor">void DATASTORE_IDENT(name__, pop)(struct name__ *self);</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  264</span><span class="preprocessor">#define DATASTORE_VEC(type__, name__) \</span></div>
+<div class="line"><span class="lineno">  265</span><span class="preprocessor">struct name__ \</span></div>
+<div class="line"><span class="lineno">  266</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  267</span><span class="preprocessor">    type__ *data; \</span></div>
+<div class="line"><span class="lineno">  268</span><span class="preprocessor">    size_t capacity; \</span></div>
+<div class="line"><span class="lineno">  269</span><span class="preprocessor">    size_t size; \</span></div>
+<div class="line"><span class="lineno">  270</span><span class="preprocessor">}; \</span></div>
+<div class="line"><span class="lineno">  271</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity); \</span></div>
+<div class="line"><span class="lineno">  272</span><span class="preprocessor">void DATASTORE_IDENT(name__, free)(struct name__ *self); \</span></div>
+<div class="line"><span class="lineno">  273</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, clone)(const struct name__ *self); \</span></div>
+<div class="line"><span class="lineno">  274</span><span class="preprocessor">void DATASTORE_IDENT(name__, shrink_to_fit)(struct name__ *self); \</span></div>
+<div class="line"><span class="lineno">  275</span><span class="preprocessor">void DATASTORE_IDENT(name__, reserve)(struct name__ *self, size_t new_capacity); \</span></div>
+<div class="line"><span class="lineno">  276</span><span class="preprocessor">void DATASTORE_IDENT(name__, push)(struct name__ *self, type__ value); \</span></div>
+<div class="line"><span class="lineno">  277</span><span class="preprocessor">void DATASTORE_IDENT(name__, pop)(struct name__ *self);</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -358,8 +358,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">     <a class="code hl_define" href="#aca4ac626deaa8eeb0a4e47191a4f8367">DATASTORE_VEC_IMPL_S</a>(trait__, name__, <a class="code hl_define" href="#a7532031af15eda1acc918c5aca4a3d8d">DATASTORE_VEC_SETTINGS_DEFAULT</a>)</div>
-<div class="ttc" id="avector_8h_html_a7532031af15eda1acc918c5aca4a3d8d"><div class="ttname"><a href="#a7532031af15eda1acc918c5aca4a3d8d">DATASTORE_VEC_SETTINGS_DEFAULT</a></div><div class="ttdeci">#define DATASTORE_VEC_SETTINGS_DEFAULT(X)</div><div class="ttdoc">Default settings for the vector type.</div><div class="ttdef"><b>Definition</b> vector.h:288</div></div>
-<div class="ttc" id="avector_8h_html_aca4ac626deaa8eeb0a4e47191a4f8367"><div class="ttname"><a href="#aca4ac626deaa8eeb0a4e47191a4f8367">DATASTORE_VEC_IMPL_S</a></div><div class="ttdeci">#define DATASTORE_VEC_IMPL_S(trait__, name__, settings__)</div><div class="ttdoc">Vector methods implementation.</div><div class="ttdef"><b>Definition</b> vector.h:327</div></div>
+<div class="ttc" id="avector_8h_html_a7532031af15eda1acc918c5aca4a3d8d"><div class="ttname"><a href="#a7532031af15eda1acc918c5aca4a3d8d">DATASTORE_VEC_SETTINGS_DEFAULT</a></div><div class="ttdeci">#define DATASTORE_VEC_SETTINGS_DEFAULT(X)</div><div class="ttdoc">Default settings for the vector type.</div><div class="ttdef"><b>Definition</b> vector.h:297</div></div>
+<div class="ttc" id="avector_8h_html_aca4ac626deaa8eeb0a4e47191a4f8367"><div class="ttname"><a href="#aca4ac626deaa8eeb0a4e47191a4f8367">DATASTORE_VEC_IMPL_S</a></div><div class="ttdeci">#define DATASTORE_VEC_IMPL_S(trait__, name__, settings__)</div><div class="ttdoc">Vector methods implementation.</div><div class="ttdef"><b>Definition</b> vector.h:336</div></div>
 </div><!-- fragment -->
 <p>Vector methods implementation. </p>
 <p>This macro defines the common methods for vector types. It will call <a class="el" href="#aca4ac626deaa8eeb0a4e47191a4f8367">DATASTORE_VEC_IMPL_S</a>, with <a class="el" href="#a7532031af15eda1acc918c5aca4a3d8d">DATASTORE_VEC_SETTINGS_DEFAULT</a>.</p>
@@ -370,8 +370,8 @@ Macros</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  439</span><span class="preprocessor">#define DATASTORE_VEC_IMPL(trait__, name__) \</span></div>
-<div class="line"><span class="lineno">  440</span><span class="preprocessor">     DATASTORE_VEC_IMPL_S(trait__, name__, DATASTORE_VEC_SETTINGS_DEFAULT)</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  448</span><span class="preprocessor">#define DATASTORE_VEC_IMPL(trait__, name__) \</span></div>
+<div class="line"><span class="lineno">  449</span><span class="preprocessor">     DATASTORE_VEC_IMPL_S(trait__, name__, DATASTORE_VEC_SETTINGS_DEFAULT)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -409,108 +409,108 @@ Macros</h2></td></tr>
   </table>
   </dd>
 </dl>
-<div class="fragment"><div class="line"><span class="lineno">  327</span><span class="preprocessor">#define DATASTORE_VEC_IMPL_S(trait__, name__, settings__) \</span></div>
-<div class="line"><span class="lineno">  328</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity) \</span></div>
-<div class="line"><span class="lineno">  329</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  330</span><span class="preprocessor">    if (initial_capacity == 0) \</span></div>
-<div class="line"><span class="lineno">  331</span><span class="preprocessor">        return (struct name__){ \</span></div>
-<div class="line"><span class="lineno">  332</span><span class="preprocessor">            .data = NULL, \</span></div>
-<div class="line"><span class="lineno">  333</span><span class="preprocessor">            .capacity = initial_capacity, \</span></div>
-<div class="line"><span class="lineno">  334</span><span class="preprocessor">            .size = 0, \</span></div>
-<div class="line"><span class="lineno">  335</span><span class="preprocessor">        }; \</span></div>
-<div class="line"><span class="lineno">  336</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr; \</span></div>
-<div class="line"><span class="lineno">  337</span><span class="preprocessor">    const size_t size = sizeof(trait__(DATASTORE_VEC_TRAIT_TYPE)) * initial_capacity; \</span></div>
-<div class="line"><span class="lineno">  338</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_NEW) \</span></div>
-<div class="line"><span class="lineno">  339</span><span class="preprocessor">    return (struct name__){ \</span></div>
-<div class="line"><span class="lineno">  340</span><span class="preprocessor">        .data = ptr, \</span></div>
-<div class="line"><span class="lineno">  341</span><span class="preprocessor">        .capacity = initial_capacity, \</span></div>
-<div class="line"><span class="lineno">  342</span><span class="preprocessor">        .size = 0, \</span></div>
-<div class="line"><span class="lineno">  343</span><span class="preprocessor">    }; \</span></div>
-<div class="line"><span class="lineno">  344</span><span class="preprocessor">} \</span></div>
-<div class="line"><span class="lineno">  345</span><span class="preprocessor">void DATASTORE_IDENT(name__, free)(struct name__ *self) \</span></div>
-<div class="line"><span class="lineno">  346</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  347</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
-<div class="line"><span class="lineno">  348</span><span class="preprocessor">    for (size_t i = 0; i &lt; self-&gt;size; ++i) \</span></div>
-<div class="line"><span class="lineno">  349</span><span class="preprocessor">    { \</span></div>
-<div class="line"><span class="lineno">  350</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &amp;self-&gt;data[i]; \</span></div>
-<div class="line"><span class="lineno">  351</span><span class="preprocessor">        DATASTORE_MAYBE_UNUSED(val); \</span></div>
-<div class="line"><span class="lineno">  352</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_FREE) \</span></div>
-<div class="line"><span class="lineno">  353</span><span class="preprocessor">    } \</span></div>
-<div class="line"><span class="lineno">  354</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
-<div class="line"><span class="lineno">  355</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_FREE) \</span></div>
-<div class="line"><span class="lineno">  356</span><span class="preprocessor">    self-&gt;data = NULL; \</span></div>
-<div class="line"><span class="lineno">  357</span><span class="preprocessor">    self-&gt;capacity = 0; \</span></div>
-<div class="line"><span class="lineno">  358</span><span class="preprocessor">    self-&gt;size = 0; \</span></div>
-<div class="line"><span class="lineno">  359</span><span class="preprocessor">} \</span></div>
-<div class="line"><span class="lineno">  360</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, clone)(const struct name__ *self) \</span></div>
-<div class="line"><span class="lineno">  361</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  362</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
-<div class="line"><span class="lineno">  363</span><span class="preprocessor">    struct name__ clone = DATASTORE_IDENT(name__, new)(self-&gt;size); \</span></div>
-<div class="line"><span class="lineno">  364</span><span class="preprocessor">    for (size_t i = 0; i &lt; self-&gt;size; ++i) \</span></div>
-<div class="line"><span class="lineno">  365</span><span class="preprocessor">    { \</span></div>
-<div class="line"><span class="lineno">  366</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &amp;self-&gt;data[i]; \</span></div>
-<div class="line"><span class="lineno">  367</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *new = &amp;clone.data[i]; \</span></div>
-<div class="line"><span class="lineno">  368</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_CLONE) \</span></div>
-<div class="line"><span class="lineno">  369</span><span class="preprocessor">    } \</span></div>
-<div class="line"><span class="lineno">  370</span><span class="preprocessor">    clone.size = self-&gt;size; \</span></div>
-<div class="line"><span class="lineno">  371</span><span class="preprocessor">    return clone; \</span></div>
-<div class="line"><span class="lineno">  372</span><span class="preprocessor">} \</span></div>
-<div class="line"><span class="lineno">  373</span><span class="preprocessor">void DATASTORE_IDENT(name__, shrink_to_fit)(struct name__ *self) \</span></div>
-<div class="line"><span class="lineno">  374</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  375</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
-<div class="line"><span class="lineno">  376</span><span class="preprocessor">    if (self-&gt;size == 0) \</span></div>
-<div class="line"><span class="lineno">  377</span><span class="preprocessor">    { \</span></div>
-<div class="line"><span class="lineno">  378</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
-<div class="line"><span class="lineno">  379</span><span class="preprocessor">        settings__(DATASTORE_VEC_SETTINGS_FREE) \</span></div>
-<div class="line"><span class="lineno">  380</span><span class="preprocessor">        self-&gt;data = NULL; \</span></div>
-<div class="line"><span class="lineno">  381</span><span class="preprocessor">        self-&gt;capacity = 0; \</span></div>
-<div class="line"><span class="lineno">  382</span><span class="preprocessor">        return; \</span></div>
-<div class="line"><span class="lineno">  383</span><span class="preprocessor">    } \</span></div>
-<div class="line"><span class="lineno">  384</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
-<div class="line"><span class="lineno">  385</span><span class="preprocessor">    const size_t size = self-&gt;size * sizeof(*ptr); \</span></div>
-<div class="line"><span class="lineno">  386</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_REALLOC) \</span></div>
-<div class="line"><span class="lineno">  387</span><span class="preprocessor">    self-&gt;data = ptr; \</span></div>
-<div class="line"><span class="lineno">  388</span><span class="preprocessor">    self-&gt;capacity = self-&gt;size; \</span></div>
-<div class="line"><span class="lineno">  389</span><span class="preprocessor">} \</span></div>
-<div class="line"><span class="lineno">  390</span><span class="preprocessor">void DATASTORE_IDENT(name__, reserve)(struct name__ *self, size_t new_capacity) \</span></div>
-<div class="line"><span class="lineno">  391</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  392</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
-<div class="line"><span class="lineno">  393</span><span class="preprocessor">    if (self-&gt;capacity &gt;= new_capacity || new_capacity == 0) \</span></div>
-<div class="line"><span class="lineno">  394</span><span class="preprocessor">        return; \</span></div>
-<div class="line"><span class="lineno">  395</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
-<div class="line"><span class="lineno">  396</span><span class="preprocessor">    const size_t size = new_capacity * sizeof(*ptr); \</span></div>
-<div class="line"><span class="lineno">  397</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_REALLOC) \</span></div>
-<div class="line"><span class="lineno">  398</span><span class="preprocessor">    self-&gt;data = ptr; \</span></div>
-<div class="line"><span class="lineno">  399</span><span class="preprocessor">    self-&gt;capacity = new_capacity; \</span></div>
-<div class="line"><span class="lineno">  400</span><span class="preprocessor">} \</span></div>
-<div class="line"><span class="lineno">  401</span><span class="preprocessor">void DATASTORE_IDENT(name__, push)(struct name__ *self, trait__(DATASTORE_VEC_TRAIT_TYPE) value) \</span></div>
-<div class="line"><span class="lineno">  402</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  403</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
-<div class="line"><span class="lineno">  404</span><span class="preprocessor">    if (self-&gt;size &lt; self-&gt;capacity) \</span></div>
-<div class="line"><span class="lineno">  405</span><span class="preprocessor">    { \</span></div>
-<div class="line"><span class="lineno">  406</span><span class="preprocessor">        self-&gt;data[self-&gt;size++] = value; \</span></div>
-<div class="line"><span class="lineno">  407</span><span class="preprocessor">        return; \</span></div>
-<div class="line"><span class="lineno">  408</span><span class="preprocessor">    } \</span></div>
-<div class="line"><span class="lineno">  409</span><span class="preprocessor">    const size_t capacity = self-&gt;capacity; \</span></div>
-<div class="line"><span class="lineno">  410</span><span class="preprocessor">    size_t new_capacity; \</span></div>
-<div class="line"><span class="lineno">  411</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_GROW) \</span></div>
-<div class="line"><span class="lineno">  412</span><span class="preprocessor">    assert(new_capacity &gt; self-&gt;size); \</span></div>
-<div class="line"><span class="lineno">  413</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
-<div class="line"><span class="lineno">  414</span><span class="preprocessor">    const size_t size = new_capacity * sizeof(*ptr); \</span></div>
-<div class="line"><span class="lineno">  415</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_REALLOC) \</span></div>
-<div class="line"><span class="lineno">  416</span><span class="preprocessor">    self-&gt;data = ptr; \</span></div>
-<div class="line"><span class="lineno">  417</span><span class="preprocessor">    self-&gt;capacity = new_capacity; \</span></div>
-<div class="line"><span class="lineno">  418</span><span class="preprocessor">    self-&gt;data[self-&gt;size++] = value; \</span></div>
-<div class="line"><span class="lineno">  419</span><span class="preprocessor">} \</span></div>
-<div class="line"><span class="lineno">  420</span><span class="preprocessor">void DATASTORE_IDENT(name__, pop)(struct name__ *self) \</span></div>
-<div class="line"><span class="lineno">  421</span><span class="preprocessor">{ \</span></div>
-<div class="line"><span class="lineno">  422</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
-<div class="line"><span class="lineno">  423</span><span class="preprocessor">    assert(self-&gt;size != 0); \</span></div>
-<div class="line"><span class="lineno">  424</span><span class="preprocessor">    --self-&gt;size; \</span></div>
-<div class="line"><span class="lineno">  425</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &amp;self-&gt;data[self-&gt;size]; \</span></div>
-<div class="line"><span class="lineno">  426</span><span class="preprocessor">    DATASTORE_MAYBE_UNUSED(val); \</span></div>
-<div class="line"><span class="lineno">  427</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_FREE) \</span></div>
-<div class="line"><span class="lineno">  428</span><span class="preprocessor">}</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  336</span><span class="preprocessor">#define DATASTORE_VEC_IMPL_S(trait__, name__, settings__) \</span></div>
+<div class="line"><span class="lineno">  337</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, new)(size_t initial_capacity) \</span></div>
+<div class="line"><span class="lineno">  338</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  339</span><span class="preprocessor">    if (initial_capacity == 0) \</span></div>
+<div class="line"><span class="lineno">  340</span><span class="preprocessor">        return (struct name__){ \</span></div>
+<div class="line"><span class="lineno">  341</span><span class="preprocessor">            .data = NULL, \</span></div>
+<div class="line"><span class="lineno">  342</span><span class="preprocessor">            .capacity = initial_capacity, \</span></div>
+<div class="line"><span class="lineno">  343</span><span class="preprocessor">            .size = 0, \</span></div>
+<div class="line"><span class="lineno">  344</span><span class="preprocessor">        }; \</span></div>
+<div class="line"><span class="lineno">  345</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr; \</span></div>
+<div class="line"><span class="lineno">  346</span><span class="preprocessor">    const size_t size = sizeof(trait__(DATASTORE_VEC_TRAIT_TYPE)) * initial_capacity; \</span></div>
+<div class="line"><span class="lineno">  347</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_NEW) \</span></div>
+<div class="line"><span class="lineno">  348</span><span class="preprocessor">    return (struct name__){ \</span></div>
+<div class="line"><span class="lineno">  349</span><span class="preprocessor">        .data = ptr, \</span></div>
+<div class="line"><span class="lineno">  350</span><span class="preprocessor">        .capacity = initial_capacity, \</span></div>
+<div class="line"><span class="lineno">  351</span><span class="preprocessor">        .size = 0, \</span></div>
+<div class="line"><span class="lineno">  352</span><span class="preprocessor">    }; \</span></div>
+<div class="line"><span class="lineno">  353</span><span class="preprocessor">} \</span></div>
+<div class="line"><span class="lineno">  354</span><span class="preprocessor">void DATASTORE_IDENT(name__, free)(struct name__ *self) \</span></div>
+<div class="line"><span class="lineno">  355</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  356</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
+<div class="line"><span class="lineno">  357</span><span class="preprocessor">    for (size_t i = 0; i &lt; self-&gt;size; ++i) \</span></div>
+<div class="line"><span class="lineno">  358</span><span class="preprocessor">    { \</span></div>
+<div class="line"><span class="lineno">  359</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &amp;self-&gt;data[i]; \</span></div>
+<div class="line"><span class="lineno">  360</span><span class="preprocessor">        DATASTORE_MAYBE_UNUSED(val); \</span></div>
+<div class="line"><span class="lineno">  361</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_FREE) \</span></div>
+<div class="line"><span class="lineno">  362</span><span class="preprocessor">    } \</span></div>
+<div class="line"><span class="lineno">  363</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
+<div class="line"><span class="lineno">  364</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_FREE) \</span></div>
+<div class="line"><span class="lineno">  365</span><span class="preprocessor">    self-&gt;data = NULL; \</span></div>
+<div class="line"><span class="lineno">  366</span><span class="preprocessor">    self-&gt;capacity = 0; \</span></div>
+<div class="line"><span class="lineno">  367</span><span class="preprocessor">    self-&gt;size = 0; \</span></div>
+<div class="line"><span class="lineno">  368</span><span class="preprocessor">} \</span></div>
+<div class="line"><span class="lineno">  369</span><span class="preprocessor">struct name__ DATASTORE_IDENT(name__, clone)(const struct name__ *self) \</span></div>
+<div class="line"><span class="lineno">  370</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  371</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
+<div class="line"><span class="lineno">  372</span><span class="preprocessor">    struct name__ clone = DATASTORE_IDENT(name__, new)(self-&gt;size); \</span></div>
+<div class="line"><span class="lineno">  373</span><span class="preprocessor">    for (size_t i = 0; i &lt; self-&gt;size; ++i) \</span></div>
+<div class="line"><span class="lineno">  374</span><span class="preprocessor">    { \</span></div>
+<div class="line"><span class="lineno">  375</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &amp;self-&gt;data[i]; \</span></div>
+<div class="line"><span class="lineno">  376</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *new = &amp;clone.data[i]; \</span></div>
+<div class="line"><span class="lineno">  377</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_CLONE) \</span></div>
+<div class="line"><span class="lineno">  378</span><span class="preprocessor">    } \</span></div>
+<div class="line"><span class="lineno">  379</span><span class="preprocessor">    clone.size = self-&gt;size; \</span></div>
+<div class="line"><span class="lineno">  380</span><span class="preprocessor">    return clone; \</span></div>
+<div class="line"><span class="lineno">  381</span><span class="preprocessor">} \</span></div>
+<div class="line"><span class="lineno">  382</span><span class="preprocessor">void DATASTORE_IDENT(name__, shrink_to_fit)(struct name__ *self) \</span></div>
+<div class="line"><span class="lineno">  383</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  384</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
+<div class="line"><span class="lineno">  385</span><span class="preprocessor">    if (self-&gt;size == 0) \</span></div>
+<div class="line"><span class="lineno">  386</span><span class="preprocessor">    { \</span></div>
+<div class="line"><span class="lineno">  387</span><span class="preprocessor">        trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
+<div class="line"><span class="lineno">  388</span><span class="preprocessor">        settings__(DATASTORE_VEC_SETTINGS_FREE) \</span></div>
+<div class="line"><span class="lineno">  389</span><span class="preprocessor">        self-&gt;data = NULL; \</span></div>
+<div class="line"><span class="lineno">  390</span><span class="preprocessor">        self-&gt;capacity = 0; \</span></div>
+<div class="line"><span class="lineno">  391</span><span class="preprocessor">        return; \</span></div>
+<div class="line"><span class="lineno">  392</span><span class="preprocessor">    } \</span></div>
+<div class="line"><span class="lineno">  393</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
+<div class="line"><span class="lineno">  394</span><span class="preprocessor">    const size_t size = self-&gt;size * sizeof(*ptr); \</span></div>
+<div class="line"><span class="lineno">  395</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_REALLOC) \</span></div>
+<div class="line"><span class="lineno">  396</span><span class="preprocessor">    self-&gt;data = ptr; \</span></div>
+<div class="line"><span class="lineno">  397</span><span class="preprocessor">    self-&gt;capacity = self-&gt;size; \</span></div>
+<div class="line"><span class="lineno">  398</span><span class="preprocessor">} \</span></div>
+<div class="line"><span class="lineno">  399</span><span class="preprocessor">void DATASTORE_IDENT(name__, reserve)(struct name__ *self, size_t new_capacity) \</span></div>
+<div class="line"><span class="lineno">  400</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  401</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
+<div class="line"><span class="lineno">  402</span><span class="preprocessor">    if (self-&gt;capacity &gt;= new_capacity || new_capacity == 0) \</span></div>
+<div class="line"><span class="lineno">  403</span><span class="preprocessor">        return; \</span></div>
+<div class="line"><span class="lineno">  404</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
+<div class="line"><span class="lineno">  405</span><span class="preprocessor">    const size_t size = new_capacity * sizeof(*ptr); \</span></div>
+<div class="line"><span class="lineno">  406</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_REALLOC) \</span></div>
+<div class="line"><span class="lineno">  407</span><span class="preprocessor">    self-&gt;data = ptr; \</span></div>
+<div class="line"><span class="lineno">  408</span><span class="preprocessor">    self-&gt;capacity = new_capacity; \</span></div>
+<div class="line"><span class="lineno">  409</span><span class="preprocessor">} \</span></div>
+<div class="line"><span class="lineno">  410</span><span class="preprocessor">void DATASTORE_IDENT(name__, push)(struct name__ *self, trait__(DATASTORE_VEC_TRAIT_TYPE) value) \</span></div>
+<div class="line"><span class="lineno">  411</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  412</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
+<div class="line"><span class="lineno">  413</span><span class="preprocessor">    if (self-&gt;size &lt; self-&gt;capacity) \</span></div>
+<div class="line"><span class="lineno">  414</span><span class="preprocessor">    { \</span></div>
+<div class="line"><span class="lineno">  415</span><span class="preprocessor">        self-&gt;data[self-&gt;size++] = value; \</span></div>
+<div class="line"><span class="lineno">  416</span><span class="preprocessor">        return; \</span></div>
+<div class="line"><span class="lineno">  417</span><span class="preprocessor">    } \</span></div>
+<div class="line"><span class="lineno">  418</span><span class="preprocessor">    const size_t capacity = self-&gt;capacity; \</span></div>
+<div class="line"><span class="lineno">  419</span><span class="preprocessor">    size_t new_capacity; \</span></div>
+<div class="line"><span class="lineno">  420</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_GROW) \</span></div>
+<div class="line"><span class="lineno">  421</span><span class="preprocessor">    assert(new_capacity &gt; self-&gt;size); \</span></div>
+<div class="line"><span class="lineno">  422</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *ptr = self-&gt;data; \</span></div>
+<div class="line"><span class="lineno">  423</span><span class="preprocessor">    const size_t size = new_capacity * sizeof(*ptr); \</span></div>
+<div class="line"><span class="lineno">  424</span><span class="preprocessor">    settings__(DATASTORE_VEC_SETTINGS_REALLOC) \</span></div>
+<div class="line"><span class="lineno">  425</span><span class="preprocessor">    self-&gt;data = ptr; \</span></div>
+<div class="line"><span class="lineno">  426</span><span class="preprocessor">    self-&gt;capacity = new_capacity; \</span></div>
+<div class="line"><span class="lineno">  427</span><span class="preprocessor">    self-&gt;data[self-&gt;size++] = value; \</span></div>
+<div class="line"><span class="lineno">  428</span><span class="preprocessor">} \</span></div>
+<div class="line"><span class="lineno">  429</span><span class="preprocessor">void DATASTORE_IDENT(name__, pop)(struct name__ *self) \</span></div>
+<div class="line"><span class="lineno">  430</span><span class="preprocessor">{ \</span></div>
+<div class="line"><span class="lineno">  431</span><span class="preprocessor">    assert(self-&gt;size &lt;= self-&gt;capacity); \</span></div>
+<div class="line"><span class="lineno">  432</span><span class="preprocessor">    assert(self-&gt;size != 0); \</span></div>
+<div class="line"><span class="lineno">  433</span><span class="preprocessor">    --self-&gt;size; \</span></div>
+<div class="line"><span class="lineno">  434</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_TYPE) *val = &amp;self-&gt;data[self-&gt;size]; \</span></div>
+<div class="line"><span class="lineno">  435</span><span class="preprocessor">    DATASTORE_MAYBE_UNUSED(val); \</span></div>
+<div class="line"><span class="lineno">  436</span><span class="preprocessor">    trait__(DATASTORE_VEC_TRAIT_FREE) \</span></div>
+<div class="line"><span class="lineno">  437</span><span class="preprocessor">}</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -534,11 +534,11 @@ Macros</h2></td></tr>
 <div class="line">    X(GROW, { new_capacity = capacity != 0 ? (capacity * 2) : 1; })</div>
 </div><!-- fragment -->
 <p>Default settings for the vector type. </p>
-<div class="fragment"><div class="line"><span class="lineno">  288</span><span class="preprocessor">#define DATASTORE_VEC_SETTINGS_DEFAULT(X) \</span></div>
-<div class="line"><span class="lineno">  289</span><span class="preprocessor">    X(NEW, { ptr = malloc(size); if (!ptr) abort(); }) \</span></div>
-<div class="line"><span class="lineno">  290</span><span class="preprocessor">    X(REALLOC, { ptr = realloc(ptr, size); if (!ptr) abort(); }) \</span></div>
-<div class="line"><span class="lineno">  291</span><span class="preprocessor">    X(FREE, { free(ptr); }) \</span></div>
-<div class="line"><span class="lineno">  292</span><span class="preprocessor">    X(GROW, { new_capacity = capacity != 0 ? (capacity * 2) : 1; })</span></div>
+<div class="fragment"><div class="line"><span class="lineno">  297</span><span class="preprocessor">#define DATASTORE_VEC_SETTINGS_DEFAULT(X) \</span></div>
+<div class="line"><span class="lineno">  298</span><span class="preprocessor">    X(NEW, { ptr = malloc(size); if (!ptr) abort(); }) \</span></div>
+<div class="line"><span class="lineno">  299</span><span class="preprocessor">    X(REALLOC, { ptr = realloc(ptr, size); if (!ptr) abort(); }) \</span></div>
+<div class="line"><span class="lineno">  300</span><span class="preprocessor">    X(FREE, { free(ptr); }) \</span></div>
+<div class="line"><span class="lineno">  301</span><span class="preprocessor">    X(GROW, { new_capacity = capacity != 0 ? (capacity * 2) : 1; })</span></div>
 </div><!-- fragment -->
 </div>
 </div>
