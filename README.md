@@ -1,4 +1,4 @@
-DataStore is a collection of simple, generic, header-only container implementation of containers in C99.
+DataStore is a collection of simple, generic, header-only container implementations in C99.
 
 Currently implemented:
  - [Vector](https://ef3d0c3e.github.io/DataStore/html/group__Vector.html) A dynamic array implementation, similar to C++'s `std::vector` and Rust's `Vec`
