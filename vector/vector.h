@@ -216,21 +216,21 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWA
  * DATASTORE_VEC(struct vec, mat)
  * DATASTORE_VEC_IMPL(MAT_TRAIT, mat)
  * typedef struct mat mat;
- * 
+ *
  * int main()
  * {
  * 	vec c1 = vec_new(2);
  * 	vec_push(&c1, 3.5f);
  * 	vec_push(&c1, -1.8f);
- * 
+ *
  * 	vec c2 = vec_new(2);
  * 	vec_push(&c2, 1.f);
  * 	vec_push(&c2, 2.7f);
- * 
+ *
  * 	mat m1 = mat_new(2);
  * 	mat_push(&m1, c1);
  * 	mat_push(&m1, c2);
- * 
+ *
  * 	mat m2 = mat_clone(&m1);
  * 	mat_free(&m1);
  * 	mat_free(&m2);
